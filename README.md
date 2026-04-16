@@ -75,11 +75,20 @@ The gap between MIT and a typical university isn't talent — it's access to cur
 
 ### Installation
 
+#### claude.ai
 1. Go to [claude.ai](https://claude.ai) → Settings → Feature Preview → Skills
 2. Upload both `.skill` files:
    - `course-syllabus-architect.skill`
    - `lab-designer.skill`
 3. Start a new conversation.
+
+#### claude code(recommended)
+1. clone this repo
+```bash
+https://github.com/Zlatanwic/Prometheus-edu-skills
+```
+2. move these skill dir to your ~/user/.claude/skills
+3. try it in claude code
 
 ### Usage
 
