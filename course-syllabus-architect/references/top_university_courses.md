@@ -2,6 +2,10 @@
 
 This is a starting map of common CS course topics → canonical courses at top US universities. Use this to know where to point your Tier 1 searches. **Always verify the course numbers and content via web search**, since course numbers and active offerings change year to year.
 
+## Meta-index (community-maintained)
+
+- **CS自学指南 — https://csdiy.wiki/** — Chinese-language curated index of top CS self-study courses (MIT / Stanford / CMU / Berkeley etc.), with links to videos, assignments, and textbooks. Useful as a Tier 0 navigation aid to quickly locate a course's public materials. Scope: CS-focused; always cross-check course numbers against the institution's own site before citing.
+
 ## Systems
 
 | Topic | Canonical courses |

@@ -23,6 +23,8 @@ or system it mirrors. What intellectual skill the student builds. This
 is the "front matter" that makes students care. Do not skip it — MIT
 and CMU labs always open with this and for good reason.>
 
+After writing the Motivation paragraph, verify: **does this paragraph introduce any technical concept that a student would not yet have encountered?** If yes, either (a) move it to the Prerequisites or New Concepts section, or (b) rewrite it to be accessible to a student who has only attended prior lectures. The Motivation should inspire, not intimidate.
+
 ## Learning outcomes
 
 After completing this lab, you will be able to:
@@ -30,15 +32,26 @@ After completing this lab, you will be able to:
 2. ...
 4. ...
 
-## Background and reading
+## Prerequisites and knowledge map
 
-Before starting, you should understand the concepts from:
-- Lecture N on <topic>
-- <Paper or textbook chapter, properly cited>
+**Critical: this section maps every concept used in this lab to where it was taught in the course.** If a concept does not appear here, you have not encountered it before — and if this lab requires it, that is a bug in the lab design. Report it to course staff.
 
-If any of the following feel unfamiliar, review them first:
-- <Concept 1>
-- <Concept 2>
+| Concept | Where it was taught | What you need to know |
+|---|---|---|
+| <concept A> | Lecture N: <title> | <specific recall — e.g., "you know how to implement a goroutine and use channels"> |
+| <concept B> | Lecture M: <title> | <specific recall> |
+| <new concept C> | **Not in course** — see "New concepts" below | — |
+
+If any row above references a lecture you have not yet attended, <b>do not start this lab</b>. Come back after that lecture, or speak with course staff.
+
+### New concepts introduced by this lab
+
+This lab teaches concepts that do not appear in any prior lecture. You will learn them as part of this lab:
+
+- **<New Concept 1>** — <one-sentence description>. <Beginner-friendly resource: e.g., [Link to relevant tutorial, official docs, or section of a popular learning resource]>
+- **<New Concept 2>** — <one-sentence description>. <Beginner-friendly resource:>
+
+> **Why this is intentional:** Good labs sometimes introduce small, focused new tools or patterns — a new standard library module, a language feature, a small algorithmic technique — that are best learned in context. We keep these small and provide clear pointers so they do not block you.
 
 ## Task overview
 
@@ -66,14 +79,15 @@ You should see all tests currently failing (that's expected — your job is to m
 
 ## The lab in parts
 
-Break the lab into 2–5 numbered parts. Each part is a checkpoint with
-its own tests passing.
+Break the lab into 3–5 numbered parts. Each part is a checkpoint with its own tests passing. **Parts must be ordered so that each one depends only on concepts from earlier lectures or from a previous part of this lab.** If you find yourself writing "for this part you will also need to understand X, which we have not covered yet" — that is a signal to reorder the parts or reconsider the scope.
 
 ### Part 1: <Sub-title>
 
 <Describe what the student implements in this part. Be specific about
 the interface contract (function signatures, CLI behavior, file format)
 but leave implementation choice to them.>
+
+**What you need:** Only concepts from Lecture(s) <N, M> or the "New concepts" section above.
 
 **Interface contract:**
 \`\`\`<language>
@@ -82,11 +96,22 @@ but leave implementation choice to them.>
 
 **What success looks like:** When Part 1 is done, \`<specific test command>\` should show all tests in \`test_part1.<ext>\` passing.
 
-**Hints:**
-- <A hint that saves students hours without giving away the solution>
-- <Another one>
+**Step-by-step guidance:**
+1. <First concrete step — what to do before writing any code>
+2. <Second step — e.g., "read the docstring on function X">
+3. <Third step — e.g., "implement the straightforward case first, handle the edge case in step N">
+
+**Common sticking points:**
+- <Stuck point 1 — here's the conceptual key without giving the answer>
+- <Stuck point 2>
 
 ### Part 2: <Sub-title>
+
+**What you need:** Everything from Part 1, plus <specific new lecture or concept>. If you have not attended that lecture yet, finish Part 1 and return later.
+
+<Same structure as Part 1>
+
+### Part 3: <Sub-title>
 ...
 
 ## Testing
@@ -148,10 +173,13 @@ If you finish early and want to explore further:
 
 ## Notes on writing each section well
 
-- **Motivation**: reference the actual system or paper the lab mirrors. "You'll implement a simplified version of the MapReduce system from Dean and Ghemawat 2004" is better than "You'll implement a distributed processing system."
+- **Motivation**: reference the actual system or paper the lab mirrors. "You'll implement a simplified version of the MapReduce system from Dean and Ghemawat 2004" is better than "You'll implement a distributed processing system." Every technical term in this paragraph must either appear in a prior lecture or in the Prerequisites table above — not introduce new terms that students have not seen.
+- **Prerequisites and knowledge map**: This is the most critical new section. For every non-trivial identifier, library call, language construct, or algorithmic concept used in the lab code, map it to where in the course syllabus it was introduced. If no such mapping exists, that concept is either (a) a "new concept" that this lab teaches, or (b) a bug — do not silently assume students know it. The "New concepts" subsection should contain no more than 2–3 items per lab and each must have a concrete learning resource.
 - **Learning outcomes**: limit to 3–5 items. More than that and none of them land.
 - **Interface contract**: use code blocks with the actual signature. Do not describe the signature in prose only.
-- **Hints**: the good ones acknowledge where students get stuck, without solving it for them. Example (from 6.5840 Raft): "You might find it useful to run `go test -race`." Example of a bad hint: "Think carefully about the invariants." (too vague to help)
+- **The lab in parts — "What you need"**: Explicitly state which lectures or prior lab parts each section depends on. This is the progressive disclosure in action — students know exactly what they need before starting each part.
+- **Step-by-step guidance**: Each part should include 3–5 numbered steps that are concrete actions, not conceptual nudges. "Read the docstring for `func Merge` in `raft.go`" is a good step. "Think carefully about the invariants" is a bad step.
+- **Common sticking points**: These are not hints — they are the top 2–3 places where a prepared student still gets derailed. Write them from the perspective of "I watched 30 students get stuck here last semester." Each should name the symptom ("your test hangs after 10 seconds") and the conceptual key to unblocking, not the answer.
 - **Hidden tests section**: students hate surprise tests. Describing the *categories* without the contents is the right balance — it lets them defend against the right failure modes.
 - **Extensions**: always include. Strong students will do them; it's also a hook for course reputation.
 
@@ -161,3 +189,5 @@ If you finish early and want to explore further:
 - Hidden test contents
 - Staff-only grading notes or edge-case taxonomies
 - The prof's own reflections on "what students usually get wrong" (those go in staff notes, not here)
+- Any technical term that has not been introduced in a prior lecture AND is not listed in the Prerequisites table
+- Code patterns, library calls, or language features not mapped in the Prerequisites table

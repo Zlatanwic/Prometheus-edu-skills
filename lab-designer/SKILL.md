@@ -59,7 +59,7 @@ Present this as a clean numbered list in chat. Then ask explicitly:
 
 **When to skip Phase 1:** If the user explicitly says "just generate all of them" or the request is for a single specific lab ("design lab 3"), go straight to Phase 2.
 
-### Step 3: Before Phase 2 — research the reference labs
+### Step 3: Before Phase 2 — research the reference labs AND the course syllabus
 
 Once the user selects labs to build out, research before writing. Top university labs are the best structural references.
 
@@ -71,7 +71,12 @@ Once the user selects labs to build out, research before writing. Top university
 
 See `references/reference_labs.md` for a cheat-sheet of the most frequently-cited MIT/Stanford/Berkeley/CMU labs by topic.
 
-### Step 3b: Auto-select code format
+**Also — extract and review the course syllabus.** If the lab was chained from `course-syllabus-architect`, read the syllabus output file carefully before writing the lab. You need to know:
+1. Which lectures have been delivered by the time this lab is assigned.
+2. Which specific concepts, functions, or language features each lecture covered.
+3. Whether the lab's code uses anything not yet covered.
+
+If you are generating a lab for a course topic without a syllabus, ask the user for a list of prior lectures or topics the students have covered. Do not proceed without this information.
 
 Detect from the course topic (lab-designer does this without asking):
 
@@ -111,6 +116,15 @@ In the chat response, include:
 
 **The 3-hour onramp rule.** A student should be able to read the lab doc, clone the starter code, run the initial tests (which should all fail in informative ways), and understand what to do in under 3 hours. If the onramp takes longer, the lab is badly scaffolded — simplify the initial step.
 
+**Syllabus alignment is mandatory.** This skill is designed to be chained with `course-syllabus-architect`. When generating a lab, you must know which lectures precede it. Every function call, library import, language construct, and algorithmic pattern in the lab code must trace back to either (a) a lecture already delivered in the syllabus, or (b) the "New concepts" section of this lab, which must provide a beginner-friendly resource. There are no exceptions. If you cannot trace a concept to either source, that is a bug — fix it before delivering the lab.
+
+Concretely: before writing the lab document, extract the lecture schedule from the syllabus. For each part of the lab, explicitly mark which lecture's material it depends on. If a lab part requires knowledge from Lecture N and the course has only delivered Lectures 1 through N-1, the lab cannot be assigned at this point — either reorder the syllabus or narrow the lab's scope.
+
+**New concepts rule.** If a lab genuinely needs to teach a small new tool, library call, or language feature not covered in any prior lecture, this is acceptable — but you must:
+1. Name it explicitly in the "New concepts introduced by this lab" section.
+2. Provide a concrete, beginner-accessible learning resource (official docs tutorial, a specific section from a popular reference, a well-rated online tutorial with URL).
+3. Keep the number of new concepts per lab to 3 or fewer.
+
 **Interface contracts, not implementation contracts.** Specify what the student's code must expose (function signatures, file names, CLI behavior) but do not over-prescribe how they get there. Leaving implementation freedom is where the learning happens. The test suite defines what "done" means.
 
 **Public tests + hidden tests.** Give students a public test suite they run locally and can reason about. Hold back a hidden test suite for grading that catches the common wrong shortcuts (e.g., a student who hardcodes expected outputs). Describe the hidden tests' *purpose* in the rubric but not their contents.
@@ -135,6 +149,8 @@ Chinese-speaking users can request output in Chinese. Translate prose, but keep:
 - **Unverified claims about external tools or libraries.** Don't state that a particular library function behaves a certain way without being sure — search it if unsure. Wrong claims in lab docs are catastrophic because students trust them.
 - **Mismatched difficulty.** A 1-week lab that actually takes 40 hours is a broken lab. If you're drafting something and it feels like it might blow up the time budget, note that in the rubric and suggest a simplification.
 - **Skipping the reference solution.** A lab without a working staff solution is an untested hypothesis. Always produce one.
+- **Syllabus-blind code.** Writing lab code that uses `collections.defaultdict`, a specific `asyncio` pattern, or a language feature without checking whether it was covered in any prior lecture. Students who have not seen these will spend hours self-teaching the prerequisites instead of learning the lab's intellectual content. The Prerequisites table exists to catch this — use it.
+- **Invisible new concepts.** Introducing 5 new concepts in a lab without explicitly calling them out and providing resources. Students will not know which concepts are "fair game" to struggle with independently vs. which ones the lab expects them to already know.
 
 ## Reference files
 

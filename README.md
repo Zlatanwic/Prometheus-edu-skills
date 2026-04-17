@@ -49,7 +49,7 @@ The core idea is a **three-agent paradigm** for AI-native education:
 
 **Agent 1 — Architect** (`course-syllabus-architect`): Designs frontier-aware, research-grounded syllabi by systematically pulling from MIT/Stanford/Berkeley/CMU course pages, recent top-venue papers, and reputable industry sources. Every citation is web-search-verified. Every lecture has a reason for existing.
 
-**Agent 2 — Lab Master** (`lab-designer`): Generates MIT/Stanford-quality lab packages — student-facing docs, starter code scaffolds (Jupyter notebooks for ML, `src/tests/` projects for systems), public test harnesses, hidden grading tests, and working staff solutions. Auto-detects the right code format from the course topic.
+**Agent 2 — Lab Master** (`lab-designer`): Generates MIT/Stanford-quality lab packages — student-facing docs, starter code scaffolds (Jupyter notebooks for ML, `src/tests/` projects for systems), public test harnesses, hidden grading tests, and working staff solutions. Auto-detects the right code format from the course topic. Every lab is syllabus-aligned: lab code uses only concepts from lectures already delivered, and any new concepts introduced by the lab are named and resource-linked.
 
 **Agent 3 — Tutor** *(coming soon)*: An AI teaching assistant that can explain concepts from the generated syllabus, walk students through lab problems with Socratic questioning, and adapt to individual learning pace. The missing piece that turns static materials into a living classroom.
 
@@ -129,6 +129,8 @@ The Lab Master agent will:
 | **Freshness** | Reuse last year's slides | Web-searches 10+ current sources per run |
 | **Citations** | Memory-based, error-prone | Every paper verified by live search |
 | **Lab quality** | One-paragraph prompts | MIT-style packages with scaffold + tests + solution |
+| **Lab-syllabus alignment** | Labs may assume unseen concepts | Every lab concept traced to a prior lecture; new concepts explicitly named and resourced |
+| **Progressive disclosure** | Vague part descriptions | Each part begins with "What you need" citing exact lecture dependencies |
 | **Code format** | One-size-fits-all | Auto-detects: notebooks for ML, projects for systems |
 | **Foundation-frontier balance** | Ad hoc | Enforced ~60/40 split with explicit justification |
 | **Iteration** | Start from scratch | Modular: fix one lecture without regenerating all 14 |
@@ -139,6 +141,7 @@ The Lab Master agent will:
 Prometheus/
 ├── course-syllabus-architect/          # Agent 1: Syllabus design
 │   ├── SKILL.md                        # Core workflow (7 steps)
+│   ├── README.md
 │   └── references/
 │       ├── top_university_courses.md   # MIT/Stanford/Berkeley/CMU course mapping
 │       ├── syllabus_template.md        # Output format template
@@ -146,9 +149,10 @@ Prometheus/
 │
 ├── lab-designer/                       # Agent 2: Lab generation
 │   ├── SKILL.md                        # Core workflow (5 steps, two-phase)
+│   ├── README.md
 │   └── references/
 │       ├── reference_labs.md           # Top-university lab cheat-sheet
-│       ├── lab_document_template.md    # Student-facing doc template
+│       ├── lab_document_template.md    # Student-facing doc template (syllabus-aligned)
 │       └── scaffold_patterns.md        # Notebook vs. project patterns
 │
 ├── README.md
@@ -182,11 +186,14 @@ Google Research blogs, Lilian Weng, Chip Huyen, engineering blogs from Meta/Netf
 
 The Lab Master follows principles distilled from the best CS labs in the world:
 
-- **The 3-hour onramp rule**: Clone → install → run failing tests → understand Part 1 in under 3 hours
-- **Interface contracts, not implementation contracts**: Specify *what*, not *how*
-- **Public + hidden tests**: Students self-check locally; grading catches shortcuts
-- **Staff solutions are real code**: Not pseudocode — a working implementation that passes all tests
-- **Auto-format detection**: ML/DL/data → Jupyter notebooks; systems/compilers/OS → `src/tests/` projects
+- **Syllabus alignment is mandatory**: Every function call, library import, and language construct in the lab code maps to a specific prior lecture in the course syllabus. If a concept has not been covered, it must appear in an explicit "New concepts" section with a beginner-friendly resource. Labs cannot require knowledge students have not yet encountered.
+- **Progressive disclosure**: Each lab is divided into 3–5 parts. Each part opens with a "What you need" line citing the exact lecture(s) it depends on. Students always know what they need before starting each section — no hidden dependencies.
+- **The 3-hour onramp**: Clone → install → run failing tests → understand Part 1 in under 3 hours.
+- **Interface contracts, not implementation contracts**: Specify *what*, not *how*.
+- **Public + hidden tests**: Students self-check locally; grading catches shortcuts.
+- **Staff solutions are real code**: Not pseudocode — a working implementation that passes all tests.
+- **Auto-format detection**: ML/DL/data → Jupyter notebooks; systems/compilers/OS → `src/tests/` projects.
+- **New concepts cap**: At most 3 new concepts per lab, each named and resource-linked. Small new tools or language features introduced in-context are acceptable, but they must not block students without a path forward.
 
 ## Roadmap
 

@@ -1,0 +1,5 @@
+date,product,qty,revenue
+2026-01-01,Widget,4,39.80
+2026-01-02,Gadget,2,49.98
+2026-01-02,Widget,,20.00
+2026-01-03,Widget,6,59.70
